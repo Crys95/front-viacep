@@ -1,16 +1,11 @@
 <template>
-  <div
-    class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 space-y-6 transition"
-  >
+  <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 space-y-6 transition">
     <h2 class="text-2xl font-bold text-blue-700 dark:text-blue-300 text-center">
       Consultar Endereço por CEP
     </h2>
 
     <div>
-      <label
-        for="cep"
-        class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
-      >
+      <label for="cep" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
         CEP
       </label>
       <input
@@ -31,10 +26,7 @@
       </button>
     </div>
 
-    <div
-      v-if="endereco"
-      class="space-y-2 border-t pt-4 border-gray-200 dark:border-gray-700"
-    >
+    <div v-if="endereco" class="space-y-2 border-t pt-4 border-gray-200 dark:border-gray-700">
       <div class="text-gray-700 dark:text-gray-300">
         <span class="font-semibold text-blue-700 dark:text-blue-300">CEP:</span>
         {{ endereco.cep }}
@@ -71,6 +63,8 @@
 import { ref } from 'vue'
 import axios from 'axios'
 
+const API = import.meta.env.VITE_API_BASE_URL
+
 const cep = ref('')
 const endereco = ref(null)
 const erro = ref('')
@@ -93,9 +87,7 @@ async function buscarCep() {
   }
 
   try {
-    const response = await axios.get(
-      `http://localhost:8000/api/cep/via-cep?cep=${cepLimpo}`
-    )
+    const response = await axios.get(`${API}/api/cep/via-cep?cep=${cepLimpo}`)
     endereco.value = response.data
   } catch (err) {
     erro.value = 'CEP não encontrado ou erro na consulta.'
